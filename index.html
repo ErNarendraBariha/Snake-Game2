@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +44,7 @@
 
     #game-info {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 2px;
       padding: 10px;
       background-color: #e0e0e0;
       border-radius: 10px;
@@ -51,7 +52,7 @@
     }
 
     #score {
-      font-size: 20px;
+      font-size: 15px;
       margin: 5px 0;
     }
 
@@ -62,46 +63,54 @@
     }
 
     button {
-      padding: 5px 2px;
+      padding: 10px 20px;
       font-size: 10px;
       background-color: #4caf50;
       color: white;
       border: none;
       cursor: pointer;
-      border-radius: 1px;
+      border-radius: 5px;
     }
 
     button:hover {
       background-color: #45a049;
     }
 
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0px;
-      margin-top: 1px;
-    }
+    #controls {
+  margin-top: 5px;
+  display: flex;
+  gap: 0px; /* Add vertical gap between the rows */
+  flex-direction: column;
+  align-items: center;
+}
 
-    .control-btn {
-      width: 30px;
-      height: 30px;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 1px;
-      font-size: 10px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.control-row {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+  gap: 10px; /* Horizontal gap between buttons */
+}
 
-    .control-btn:hover {
-      background-color: #ffffff;
-    }
+.control-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
 
-    .empty {
-      background: none;
-      cursor: default;
-    }
+.control-btn:active {
+  background-color: #45a049;
+}
+
   </style>
 </head>
 <body>
@@ -112,16 +121,17 @@
     <p id="game-over" style="display: none;">Game Over!</p>
     <button id="play-again" style="display: none;">Play Again</button>
   </div>
-  <div class="controls">
-    <button class="control-btn empty"></button>
-    <button class="control-btn" id="btn-up">↑</button>
-    <button class="control-btn empty"></button>
-    <button class="control-btn" id="btn-left">←</button>
-    <button class="control-btn empty"></button>
-    <button class="control-btn" id="btn-right">→</button>
-    <button class="control-btn empty"></button>
-    <button class="control-btn" id="btn-down">↓</button>
-    <button class="control-btn empty"></button>
+
+  <!-- Keyboard-Style Controls -->
+  <div id="controls">
+    <div class="control-row">
+      <button id="up" class="control-btn">↑</button>
+    </div>
+    <div class="control-row">
+      <button id="left" class="control-btn">←</button>
+      <button id="down" class="control-btn">↓</button>
+      <button id="right" class="control-btn">→</button>
+    </div>
   </div>
 
   <script>
@@ -130,11 +140,7 @@
     const scoreDisplay = document.getElementById("score");
     const gameOverText = document.getElementById("game-over");
     const playAgainButton = document.getElementById("play-again");
-
-    const btnUp = document.getElementById("btn-up");
-    const btnDown = document.getElementById("btn-down");
-    const btnLeft = document.getElementById("btn-left");
-    const btnRight = document.getElementById("btn-right");
+    const controls = document.getElementById("controls");
 
     let snake = [{ x: 10, y: 10 }];
     let food = { x: 15, y: 15 };
@@ -229,18 +235,19 @@
       }
     }
 
-    function handleButtonPress(btnDirection) {
-      switch (btnDirection) {
-        case "UP":
+    function handleControlClick(event) {
+      const buttonId = event.target.id;
+      switch (buttonId) {
+        case "up":
           if (direction !== "DOWN") direction = "UP";
           break;
-        case "DOWN":
+        case "down":
           if (direction !== "UP") direction = "DOWN";
           break;
-        case "LEFT":
+        case "left":
           if (direction !== "RIGHT") direction = "LEFT";
           break;
-        case "RIGHT":
+        case "right":
           if (direction !== "LEFT") direction = "RIGHT";
           break;
       }
@@ -271,12 +278,7 @@
     }
 
     document.addEventListener("keydown", handleKeyPress);
-
-    btnUp.addEventListener("click", () => handleButtonPress("UP"));
-    btnDown.addEventListener("click", () => handleButtonPress("DOWN"));
-    btnLeft.addEventListener("click", () => handleButtonPress("LEFT"));
-    btnRight.addEventListener("click", () => handleButtonPress("RIGHT"));
-
+    controls.addEventListener("click", handleControlClick);
     playAgainButton.addEventListener("click", resetGame);
 
     createBoard();
@@ -288,10 +290,7 @@
 
 
 
-
-
-
 <p>
   Copyright &copy; <script>document.write(new Date().getFullYear());</script> | Developed by 
-  <strong><a href="https://www.linkedin.com/in/narendra-bariha/" target="_blank" rel="noopener noreferrer">Narendra Bariha</a></strong>
+  <strong><a href="" >Narendra Bariha</a></strong>
 </p>
